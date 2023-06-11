@@ -3,28 +3,39 @@ import styled from 'styled-components';
 import './App.css';
 
 const StyledStudentDetails = styled.div`
-  margin-top: 120px;
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 7px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height:370px;
-  margin-right:20px;
+  width:370px;
+  margin-left:700px;
+  margin-top:0px;
   img{
-    height:100px;
+    height:150px;
+    width:370px;
   }
   h3{
     color:rgb(25, 59, 153)
   }
-
+  justify-content:flex-start;
+  position:relative;
+  top:-469px;
+  left: 40px;
+`;
+const StyledStudentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
-const StudentDetails = ({ student }) => {
+
+const StudentDetails = ({ student}) => {
   const { name, email, website, image, gender, skills } = student;
 
   return (
     <StyledStudentDetails>
-      <h3>STUDENT DETAILS</h3>
+      <h3 style={{textAlign:"center"}}>STUDENT DETAILS</h3>
       <div>
         {image && <img src={URL.createObjectURL(image)} alt="Student" />}
       </div>
@@ -79,44 +90,46 @@ function App() {
 
   return (
     <div className="app-container">
-      <form onSubmit={handleEnrollStudent}>
-        <header>
-        <h1 className='form-head'>STUDENT ENROLLMENT FORM</h1>
+      <header style={{width:1600,height:50,textAlign:'center'}}>
+        <h1>STUDENT ENROLLMENT FORM</h1>
         </header>
-        <label htmlFor="name">Name</label>
+        <div>
+      <form onSubmit={handleEnrollStudent} className='enrollForm'>
+        <label htmlFor="name" className='enrollDetail'>Name</label>
         <input
           type="text"
           className="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         /><br/><br/>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" className='enrollDetail'>Email</label>
         <input
           type="email"
           className="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         /><br/><br/>
-        <label htmlFor="website">Website</label>
+        <label htmlFor="website" className='enrollDetail'>Website</label>
         <input
           type="text"
           className="website"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
         /><br/><br/>
-        <label htmlFor="image">Image Link</label>
+        <label htmlFor="image" className='enrollDetail'>Image Link</label>
         <input
           type="file"
           className="image"
           onChange={(e) => setImage(e.target.files[0])}
         /><br/><br/>
-        <span>Gender:</span>
+        <span className='enrollDetail'>Gender:</span>
         <label htmlFor="gender" className='male'>Male</label>
         <input
           type="radio"
           className="male"
           name="gender"
           value="Male"
+          checked={gender === 'Male'}
           onChange={(e) => setGender(e.target.value)}
         />
         <label htmlFor="gender" className='female'>Female</label>
@@ -125,9 +138,10 @@ function App() {
           className="female"
           name="gender"
           value="Female"
+          checked={gender === 'Female'}
           onChange={(e) => setGender(e.target.value)}
         /><br/><br/>
-        <label htmlFor="skill">Skills</label>
+        <label htmlFor="skill" className='enrollDetail'>Skills</label>
         <input
           type="checkbox"
           className="skills"
@@ -176,13 +190,15 @@ function App() {
        <button type="submit" className='student'>Enroll Student</button>
         <button type="button" className='clear' onClick={handleClearForm}>Clear</button><br/><br/>
       </form>
-      <div class="vl"></div>
-
+      
+      <StyledStudentContainer>
       {enrolledStudents.map((student, index) => (
         <div key={index}>
           <StudentDetails student={student} />
         </div>
       ))}
+      </StyledStudentContainer>
+    </div>
     </div>
   );
 }
