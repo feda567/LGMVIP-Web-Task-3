@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import styled from 'styled-components';
 import './App.css';
 
@@ -58,6 +58,7 @@ function App() {
   const [gender, setGender] = useState('');
   const [skills, setSkills] = useState([]);
   const [enrolledStudents, setEnrolledStudents] = useState([]);
+  const fileInputRef = useRef(null);
 
   const handleEnrollStudent = (e) => {
     e.preventDefault();
@@ -82,6 +83,7 @@ function App() {
     setImage(null);
     setGender('');
     setSkills([]);
+    fileInputRef.current.value = null;
   };
 
   const clearForm = () => {
@@ -120,6 +122,7 @@ function App() {
         <input
           type="file"
           className="image"
+          ref={fileInputRef}
           onChange={(e) => setImage(e.target.files[0])}
         /><br/><br/>
         <span className='enrollDetail'>Gender:</span>
@@ -146,6 +149,7 @@ function App() {
           type="checkbox"
           className="skills"
           value="Java"
+          checked={skills.includes('Java')}
           onChange={(e) => {
             const javaChecked = e.target.checked;
             setSkills(prevSkills => {
@@ -161,6 +165,7 @@ function App() {
           type="checkbox"
           className="skills"
           value="Html"
+          checked={skills.includes('Html')}
           onChange={(e) => {
             const htmlChecked = e.target.checked;
             setSkills(prevSkills => {
@@ -176,6 +181,7 @@ function App() {
           type="checkbox"
           className="skills"
           value="CSS"
+          checked={skills.includes('CSS')}
           onChange={(e) => {
             const cssChecked = e.target.checked;
             setSkills(prevSkills => {
